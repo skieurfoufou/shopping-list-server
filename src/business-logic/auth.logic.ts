@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import env from "../utils/env";
-import { getUserByEmail } from "./user.logic";
+import { getUserByEmail } from "./users/users.logic";
 import BadRequestError from "../utils/errors/BadRequestError";
 
-async function login(password: string, email: string) {
+export async function login(password: string, email: string) {
   const user = await getUserByEmail(email);
   const match = bcrypt.compareSync(password, user.password);
   if (!match) {
@@ -44,5 +44,3 @@ export function isTokenValid(bearerToken: string | undefined) {
     return false;
   }
 }
-
-module.exports = { isTokenValid, login };
